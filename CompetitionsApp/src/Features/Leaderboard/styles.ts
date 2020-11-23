@@ -1,30 +1,29 @@
 import {StyleSheet} from 'react-native';
 import applicationStyle from '../../Theme/applicationStyle';
-import colors from '../../Theme/colors';
-import fonts from '../../Theme/fonts';
 
 export default StyleSheet.create({
   safeArea: {
     ...applicationStyle.safeArea,
   },
   title: {
-    color: 'black',
-    fontSize: fonts.fontSize.dp50,
-    textAlign: 'center',
+    ...applicationStyle.title,
   },
   firstElement: {
     marginStart: 15,
   },
   image: {
-    width: 66,
-    height: 58,
+    width: 40,
+    height: 40,
+    borderRadius: 100,
   },
   item: {
     alignItems: 'center',
     flex: 1,
     flexDirection: 'row',
-    backgroundColor: colors.blue,
-    borderRadius: 10,
+    borderRadius: 100,
     marginTop: 4,
+  },
+  name: {
+    fontSize: 20,
   },
 });

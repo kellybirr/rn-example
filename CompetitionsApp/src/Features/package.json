@@ -1,3 +1,6 @@
 {
-  "name": "@features"
+  "name": "@features",
+  "devDependencies": {
+    "@types/react-native": "^0.63.36"
+  }
 }

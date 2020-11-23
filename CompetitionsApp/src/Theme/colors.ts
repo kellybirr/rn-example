@@ -3,6 +3,7 @@
  */
 
 export default {
-  blue: '#bde1fc',
+  blue: '#0087bd',
   black: 'black',
+  lightBlue: '#bbceed',
 };

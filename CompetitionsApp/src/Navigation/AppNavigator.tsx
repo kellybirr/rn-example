@@ -1,15 +1,14 @@
-import Leaders from '@models/Leaders/leaders';
+import CompetitionsContainer from '@features/Competitions/CompetitionsContainer';
+import LeaderboardContainer from '@features/Leaderboard/LeaderboardContaier';
 import {NavigationContainer, RouteProp} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';
-import CompetitionsContainer from '@features/Competitions/CompetitionsContainer';
-import LeaderboardContainer from '@features/Leaderboard/LeaderboardContaier';
 import {AppRoute} from './app-routes';
 
 export type ParamList = {
   Competitions: undefined;
   Leaderboard: {
-    leaders: Leaders[];
+    id: string;
   };
 };
 
@@ -24,6 +23,9 @@ const AppNavigator = () => {
         <Stack.Screen
           name={AppRoute.Competitions}
           component={CompetitionsContainer}
+          options={{
+            headerShown: false,
+          }}
         />
         <Stack.Screen
           name={AppRoute.Leaderboard}

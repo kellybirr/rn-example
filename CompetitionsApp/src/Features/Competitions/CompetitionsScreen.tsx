@@ -1,15 +1,25 @@
-import {useNavigation} from '@react-navigation/native';
-import React, {useContext} from 'react';
-import {FlatList, Text, TouchableOpacity, View} from 'react-native';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import useMountEffect from '@customHooks/useMountEffect';
+import {faAngleRight} from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
 import Competition from '@models/Competition/competition';
 import {AppRoute} from '@navigation/app-routes';
+import {useNavigation} from '@react-navigation/native';
+import colors from '@theme/colors';
 import {LocalizationContext} from '@translations/Translations';
-import useMountEffect from '@utils/Hooks/useMountEffect';
+import React, {useContext} from 'react';
+import {
+  ActivityIndicator,
+  FlatList,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import styles from './styles';
 
 type StoreProps = {
   competitions: Competition[];
+  loading: boolean;
 };
 
 type DispatchProps = {
@@ -18,31 +28,35 @@ type DispatchProps = {
 
 type Props = StoreProps & DispatchProps;
 const CompetitionsScreen = (props: Props) => {
-  const {competitions, fetchCompetitions} = props;
-  console.log(props.competitions);
+  const {competitions, fetchCompetitions, loading} = props;
   const navigation = useNavigation();
   const {translations} = useContext(LocalizationContext);
 
   useMountEffect(() => {
     fetchCompetitions();
   });
-  const renderItem = ({item}) => (
-    <View style={styles.item}>
-      <TouchableOpacity
-        onPress={() =>
-          navigation.navigate(AppRoute.Leaderboard, {leaders: item.leaders})
-        }>
-        <Text>
-          {item.myRank} {item.name}
-        </Text>
-      </TouchableOpacity>
-    </View>
+  const renderItem = ({item}: any) => (
+    <TouchableOpacity
+      style={styles.item}
+      onPress={() => navigation.navigate(AppRoute.Leaderboard, {id: item.id})}>
+      <View style={styles.firstElement}>
+        <Text style={styles.rank}>{item.myRank}</Text>
+      </View>
+      <Text style={styles.competitions}> {item.name}</Text>
+      <View style={styles.lastElement}>
+        <FontAwesomeIcon
+          icon={faAngleRight}
+          size={18}
+          color={colors.black}></FontAwesomeIcon>
+      </View>
+    </TouchableOpacity>
   );
 
   return (
     <SafeAreaView style={styles.safeArea}>
       <Text style={styles.title}>{translations.competitions}:</Text>
-      {competitions.length !== 0 && (
+      {loading && <ActivityIndicator size="large" color={colors.blue} />}
+      {!loading && competitions.length !== 0 && (
         <FlatList
           data={competitions}
           renderItem={renderItem}

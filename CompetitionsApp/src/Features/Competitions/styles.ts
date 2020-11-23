@@ -1,6 +1,5 @@
 import applicationStyle from '@theme/applicationStyle';
 import colors from '@theme/colors';
-import fonts from '@theme/fonts';
 import {StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
@@ -8,16 +7,37 @@ export default StyleSheet.create({
     ...applicationStyle.safeArea,
   },
   title: {
-    color: colors.black,
-    fontSize: fonts.fontSize.dp60,
+    ...applicationStyle.title,
   },
   item: {
-    height: 71,
-    backgroundColor: colors.blue,
+    flexDirection: 'row',
+    height: 40,
     opacity: 1,
     borderRadius: 10,
     alignItems: 'center',
-    justifyContent: 'center',
     marginTop: 4,
+    borderBottomColor: colors.black,
+    borderBottomWidth: 0.5,
+  },
+  firstElement: {
+    alignSelf: 'center',
+    justifyContent: 'center',
+    width: 40,
+    height: 40,
+    borderRadius:100,
+    borderColor: colors.black,
+    borderWidth: 2,
+  },
+  lastElement: {
+    flex: 1,
+    alignItems: 'flex-end',
+    marginEnd: 15,
+  },
+  competitions: {
+    fontSize: 20,
+  },
+  rank: {
+    alignSelf: 'center',
+    justifyContent: 'center',
   },
 });

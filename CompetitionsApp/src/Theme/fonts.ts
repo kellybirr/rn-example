@@ -3,12 +3,10 @@
  */
 
 export default {
-    fontFamily: {
-       
-    },
-    fontSize: {
-        dp50: 25,
-        dp60: 30,
-
-    },
+  fontFamily: {},
+  fontSize: {
+    dp40: 20,
+    dp50: 25,
+    dp60: 30,
+  },
 };

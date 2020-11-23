@@ -1,13 +1,14 @@
 import {delayedPromise} from './mock';
-import {setCompetitions} from './slice';
+import {setCompetitions, setLoading} from './slice';
 
 export const fetchCompetitions = () => {
   return (dispatch: any) => {
-    console.log('Store');
+    dispatch(setLoading(true));
+
     delayedPromise()
       .then((data: any) => {
-        console.log(data);
         dispatch(setCompetitions({competition: data.items}));
+        dispatch(setLoading(false));
       })
       .catch((err) => console.log('err:', err));
   };

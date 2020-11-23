@@ -188,6 +188,6 @@ export function delayedPromise() {
   return new Promise((resolve) => {
     setTimeout(() => {
       return resolve(competitions);
-    }, 300);
+    }, 3000);
   });
 }
