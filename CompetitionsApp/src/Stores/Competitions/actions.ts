@@ -1,15 +1,23 @@
-import {delayedPromise} from './mock';
+import {getCompetitions} from '@services/CompetitionsService';
+import {RootState} from '@store/Root/RootState';
+import {AnyAction} from 'redux';
+import {ThunkAction} from 'redux-thunk';
 import {setCompetitions, setLoading} from './slice';
 
-export const fetchCompetitions = () => {
-  return (dispatch: any) => {
-    dispatch(setLoading(true));
+export const fetchCompetitions = (): ThunkAction<
+  void,
+  RootState,
+  null,
+  AnyAction
+> => async (dispatch: any) => {
+  dispatch(setLoading(true));
+  try {
+    const response = await getCompetitions();
 
-    delayedPromise()
-      .then((data: any) => {
-        dispatch(setCompetitions({competition: data.items}));
-        dispatch(setLoading(false));
-      })
-      .catch((err) => console.log('err:', err));
-  };
+    if (response) {
+      dispatch(setCompetitions({competition: response.items}));
+    }
+  } catch (exception) {}
+
+  dispatch(setLoading(false));
 };

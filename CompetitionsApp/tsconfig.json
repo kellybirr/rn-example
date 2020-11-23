@@ -44,7 +44,7 @@
       "@components/*": ["Components/*"],
       "@store/*": ["Stores/*"],
       "@features/*": ["Features/*"],
-      "@services/*": ["Services/*"],
+      "@services/*": ["Service/*"],
       "@models/*": ["Models/*"],
       "@navigation/*": ["Navigation/*"],
       "@translations/*": ["Translations/*"],

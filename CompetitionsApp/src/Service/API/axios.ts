@@ -1,6 +1,6 @@
 import {Config} from '../../Config';
-import axios from '../API/api';
-import {getStorageItem, SESSION_TOKEN, setStorageItem} from '../AsyncStorage';
+import axios from './api';
+import {getStorageItem, SESSION_TOKEN} from '../AsyncStorage';
 
 const readToken = async (tokenNeeded: boolean = true) => {
   const token = await getStorageItem(SESSION_TOKEN);
@@ -32,7 +32,6 @@ export const axiosGetRequest = async <T>(
       .then((response) => {
         console.log(response.request);
         let parsedResponse = JSON.parse(response.data);
-        refreshSessionToken(parsedResponse);
         resolve(parsedResponse);
       })
       .catch((error) => {
@@ -68,7 +67,6 @@ export const axiosPostRequest = async <T1, T2>(
       headers: {'Content-Type': 'application/json'},
     })
       .then((response) => {
-        refreshSessionToken(response.data);
         resolve(response.data);
       })
       .catch((error) => {
@@ -77,24 +75,3 @@ export const axiosPostRequest = async <T1, T2>(
       });
   });
 };
-
-/**
- * Read session token from the AuthenticationToken response key or NewUserKey
- * this is refreshing the session key
- * @param parsedResponse
- */
-function refreshSessionToken(parsedResponse: any) {
-  let sessionToken = undefined;
-  if (parsedResponse.Result) {
-    sessionToken = parsedResponse.Result.AuthenticationToken;
-  }
-  let updatedSessionToken = parsedResponse.NewUserKey;
-
-  if (sessionToken) {
-    setStorageItem(SESSION_TOKEN, sessionToken);
-    return;
-  }
-  if (updatedSessionToken) {
-    setStorageItem(SESSION_TOKEN, updatedSessionToken);
-  }
-}
