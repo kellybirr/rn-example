@@ -1,5 +1,5 @@
 import CompetitionsContainer from '@features/Competitions/CompetitionsContainer';
-import LeaderboardContainer from '@features/Leaderboard/LeaderboardContaier';
+import LeaderboardContainer from '@features/Leaderboard/LeaderboardContainer';
 import LoginContainer from '@features/Login/LoginContainer';
 import {NavigationContainer, RouteProp} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
@@ -8,11 +8,15 @@ import {AppRoute} from './app-routes';
 
 export type ParamList = {
   Competitions: undefined;
+  Login: {
+    action?: string;
+  };
   Leaderboard: {
     id: string;
   };
 };
 
+export type LoginRouteProp = RouteProp<ParamList, AppRoute.Login>;
 export type LeadersRouteProp = RouteProp<ParamList, AppRoute.Leaderboard>;
 
 const Stack = createStackNavigator<ParamList>();
@@ -24,6 +28,7 @@ const AppNavigator = () => {
         <Stack.Screen
           name={AppRoute.Login}
           component={LoginContainer}
+          initialParams={{action: ''}}
         />
         <Stack.Screen
           name={AppRoute.Competitions}

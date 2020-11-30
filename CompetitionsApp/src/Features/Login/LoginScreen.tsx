@@ -1,19 +1,12 @@
 import Auth0 from "react-native-auth0";
 import useMountEffect from '@customHooks/useMountEffect';
 import {AppRoute} from '@navigation/app-routes';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import {LocalizationContext} from '@translations/Translations';
 import React, {useContext} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {
-    ActivityIndicator,
-    Alert,
-    Button,
-    FlatList,
-    Text,
-    TouchableOpacity,
-    View,
-  } from 'react-native';
+import {LoginRouteProp} from '@navigation/AppNavigator';
+import {Button, FlatList} from 'react-native';
 
 type StoreProps = {
     credentials: any;
@@ -27,9 +20,14 @@ const auth0 = new Auth0({ domain: 'kb419.auth0.com', clientId: 'G6GsTFJ5icKQXrnh
 
 type Props = StoreProps & DispatchProps;
 const LoginScreen = (props: Props) => {
+    const route = useRoute<LoginRouteProp>();
+    const action = route.params['action'];
+
     const {credentials, loggingIn} = props;
     const navigation = useNavigation();
     const {translations} = useContext(LocalizationContext);
+
+    var loggedIn: boolean = false;
 
     useMountEffect(() => {
         // loggingIn();
@@ -40,7 +38,10 @@ const LoginScreen = (props: Props) => {
             .then(credentials => {
                 // Successfully authenticated - store creds
                 console.log(credentials)
-                navigation.navigate(AppRoute.Competitions);
+                loggedIn = true;
+                setTimeout(() => {
+                    navigation.navigate(AppRoute.Competitions);
+                }, 500);
             })
             .catch(error => {
                 console.log(error)
@@ -50,17 +51,28 @@ const LoginScreen = (props: Props) => {
     const doLogout = () => {
         auth0.webAuth.clearSession()
             .then(success => {
-                // this.setState({ accessToken: null });    
+                // this.setState({ accessToken: null });   
+                console.log('log out success');
+                loggedIn = false; 
             })
             .catch(error => {
                 console.log('Log out cancelled');
             });
     };
 
+    switch (action) {
+        case "logout":
+            doLogout();
+            break;
+        default:
+            doLogin();
+            break;
+    }
+
     return (
         <SafeAreaView>
-          <Button onPress={doLogin} title="Login" />
-          <Button onPress={doLogout} title="Logout" />
+          {!loggedIn && <Button onPress={doLogin} title={translations.login} />}
+          {loggedIn && <Button onPress={doLogout} title={translations.logout} />}
         </SafeAreaView>
     );    
 };

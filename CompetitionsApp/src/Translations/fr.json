@@ -1,1 +1,6 @@
-{"competitions": "Compétitions", "leadersboard": "Classement"}
+{
+    "competitions": "Compétitions",
+    "leadersboard": "Classement",
+    "login": "Login",
+    "logout": "Logout"
+}

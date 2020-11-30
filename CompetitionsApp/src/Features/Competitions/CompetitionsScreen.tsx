@@ -66,7 +66,7 @@ const CompetitionsScreen = (props: Props) => {
           keyExtractor={(item: any) => item.id.toString()}
         />
       )}
-      {!loading && <Button onPress={() => navigation.navigate(AppRoute.Login)} title="Logout" />}
+      {!loading && <Button onPress={() => navigation.navigate(AppRoute.Login, {action: "logout"})} title={translations.logout} />}
     </SafeAreaView>
   );
 };
