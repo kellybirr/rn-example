@@ -9,6 +9,8 @@ import {LocalizationContext} from '@translations/Translations';
 import React, {useContext} from 'react';
 import {
   ActivityIndicator,
+  Alert,
+  Button,
   FlatList,
   Text,
   TouchableOpacity,
@@ -35,6 +37,7 @@ const CompetitionsScreen = (props: Props) => {
   useMountEffect(() => {
     fetchCompetitions();
   });
+
   const renderItem = ({item}: any) => (
     <TouchableOpacity
       style={styles.item}
@@ -63,6 +66,7 @@ const CompetitionsScreen = (props: Props) => {
           keyExtractor={(item: any) => item.id.toString()}
         />
       )}
+      {!loading && <Button onPress={() => navigation.navigate(AppRoute.Login)} title="Logout" />}
     </SafeAreaView>
   );
 };

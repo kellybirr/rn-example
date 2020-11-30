@@ -1,5 +1,6 @@
 import CompetitionsContainer from '@features/Competitions/CompetitionsContainer';
 import LeaderboardContainer from '@features/Leaderboard/LeaderboardContaier';
+import LoginContainer from '@features/Login/LoginContainer';
 import {NavigationContainer, RouteProp} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';
@@ -19,7 +20,11 @@ const Stack = createStackNavigator<ParamList>();
 const AppNavigator = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Competitions">
+      <Stack.Navigator initialRouteName={AppRoute.Login}>
+        <Stack.Screen
+          name={AppRoute.Login}
+          component={LoginContainer}
+        />
         <Stack.Screen
           name={AppRoute.Competitions}
           component={CompetitionsContainer}
